@@ -1,4 +1,3 @@
-
 import requests
 
 # Hardcoded API key (for testing purposes)
@@ -28,7 +27,7 @@ def get_top_cryptos(limit=15, sort_by=None):
 
         # If sorting by gainers or losers, fetch a larger set (e.g., top 100) to sort
         if sort_by in ['gainers', 'losers']:
-            params['per_page'] = 20  # Fetch top 100 coins
+            params['per_page'] = 100  # Fetch top 100 coins to have a larger set for sorting
             response = requests.get(url, headers=headers, params=params)
             response.raise_for_status()  # Check for errors
             data = response.json()
@@ -40,9 +39,12 @@ def get_top_cryptos(limit=15, sort_by=None):
             elif sort_by == 'losers':
                 # Sort in ascending order by price change (top losers)
                 data_sorted = sorted(data, key=lambda x: x.get('price_change_percentage_24h', 0))
+
+            # Now limit to the top 10 after sorting (ensuring only top 10 are returned)
+            data_sorted = data_sorted[:limit]  # Limit the result to the top 'limit' number of results
         else:
             # No sorting, return top cryptocurrencies by market cap
-            data_sorted = data
+            data_sorted = data[:limit]  # Ensure we limit to the requested amount
 
         return data_sorted
 
