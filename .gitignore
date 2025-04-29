@@ -1,0 +1,28 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.so
+
+# Environment variables
+.env
+.venv/
+env/
+venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+
+# macOS system files
+.DS_Store
+
+# Logs and local database
+*.log
+*.sqlite3
+
+# Streamlit specific
+streamlit_app.log

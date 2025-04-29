@@ -51,3 +51,44 @@ def get_top_cryptos(limit=15, sort_by=None):
     except requests.exceptions.RequestException as e:
         print(f"Error fetching data: {e}")
         return []
+
+def get_coin_details(coin_id):
+    url = f"https://api.coingecko.com/api/v3/coins/{coin_id}"
+    headers = {'x-cg-demo-api-key': api_key}
+    params = {'localization': 'false', 'tickers': 'false', 'market_data': 'true', 'community_data': 'false', 'developer_data': 'true', 'sparkline': 'false'}
+
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching coin details: {e}")
+        return None
+
+import requests
+import pandas as pd
+from datetime import datetime
+
+import requests
+import pandas as pd
+
+def get_historical_prices(coin_id, days=90):
+    url = f"https://api.coingecko.com/api/v3/coins/{coin_id}/market_chart"
+    params = {
+        "vs_currency": "usd",
+        "days": days,
+        "interval": "daily"
+    }
+
+    response = requests.get(url, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        prices = data.get("prices", [])
+
+        # Convert to DataFrame for Prophet
+        df = pd.DataFrame(prices, columns=["ds", "y"])
+        df["ds"] = pd.to_datetime(df["ds"], unit="ms")
+        return df
+    else:
+        return pd.DataFrame()  # Return empty DataFrame if API call fails
