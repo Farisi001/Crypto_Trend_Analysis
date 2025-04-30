@@ -1,5 +1,6 @@
 streamlit
-requests
+prophet
 plotly
 pandas
-prophet
+requests
+python-dotenv
