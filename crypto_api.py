@@ -1,7 +1,8 @@
 import requests
 
-# Hardcoded API key (for testing purposes)
-api_key = "CG-7S1xjb3bHzgUZqGawEjvauh4"
+import os
+api_key = os.getenv("COINGECKO_API_KEY")
+
 
 def get_top_cryptos(limit=15, sort_by=None):
     """

@@ -3,6 +3,8 @@ from prophet import Prophet
 import pandas as pd
 import plotly.express as px
 from crypto_api import get_top_cryptos, get_coin_details, get_historical_prices
+from dotenv import load_dotenv
+load_dotenv()
 
 st.set_page_config(page_title="Crypto Analytics Dashboard", layout="wide")
 st.title("Crypto Analytics Dashboard")
